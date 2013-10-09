@@ -1,0 +1,11 @@
+# OASIS_START
+# DO NOT EDIT (digest: 7110d18b69c7e1be3e06de9015a49fe6)
+version = "1.0.0"
+description = "Functional lenses"
+archive(byte) = "lens.cma"
+archive(byte, plugin) = "lens.cma"
+archive(native) = "lens.cmxa"
+archive(native, plugin) = "lens.cmxs"
+exists_if = "lens.cma"
+# OASIS_STOP
+

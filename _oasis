@@ -1,0 +1,13 @@
+OASISFormat: 0.3
+Name:        lens
+Version:     1.0.0
+Synopsis:    Functional lenses
+Authors:     Alessandro Strada
+License:     BSD3
+Plugins:     META (0.3), DevFiles (0.3)
+BuildTools:  ocamlbuild
+
+Library lens
+  Path: .
+  Findlibname: lens
+  Modules: Lens
