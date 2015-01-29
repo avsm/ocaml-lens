@@ -12,7 +12,7 @@ Description:
 Homepage:       https://github.com/avsm/ocaml-lens
 Version:        1.0.0
 Synopsis:       Functional lenses
-Authors:        Alessandro Strada
+Authors:        Alessandro Strada <alessandro.strada@gmail.com>
 Maintainers:    Paolo Donadeo <p.donadeo@gmail.com>
 License:        BSD-3-clause
 Plugins:        META (0.4), DevFiles (0.4)
