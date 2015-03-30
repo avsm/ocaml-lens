@@ -17,3 +17,4 @@ true: annot, bin_annot
 # Library lens
 "lens.cmxs": use_lens
 # OASIS_STOP
+true: debug, principal
