@@ -20,6 +20,7 @@ First load `Lens` in utop.
 
 Given a couple of records
 
+``` ocaml
     type car = {
         make : string;
         model: string;
@@ -37,9 +38,11 @@ Given a couple of records
         author: string;
         editor: editor;
     };;
+```
 
 Create a new nested record
 
+``` ocaml
     let scifi_novel = {
        name =  "Metro 2033";
        author = "Dmitry Glukhovsky";
@@ -53,9 +56,11 @@ Create a new nested record
         }
       }
     };;
+```
 
 Now to construct a few lenses to access some things
 
+``` ocaml
     let car_lens = {
 	    get = (fun x -> x.car);
 	    set = (fun v x -> { x with car = v })
@@ -71,16 +76,21 @@ Now to construct a few lenses to access some things
 	    set = (fun v x -> { x with mileage = v })
 
     };;
+```
 
 Using these lenses we can modify the mileage without having to unpack the record
 
+``` ocaml
     let a = compose mileage_lens (compose car_lens editor_lens) in
     _set 10 scifi_novel a;;
+```
 
 Or using the `Infix` module we can do the same thing, only shorter.
 
+``` ocaml
     _set 10 scifi_novel (editor_lens |-- car_lens |-- mileage_lens);;
 
     (* or *)
 
     ((editor_lens |-- car_lens |-- mileage_lens) ^= 10) @@ scifi_novel;;
+```
