@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: 7110d18b69c7e1be3e06de9015a49fe6)
-version = "1.0.0"
+# DO NOT EDIT (digest: 4069a55bd3b6fca80ea3067861b2ff47)
+version = "1.0.2"
 description = "Functional lenses"
 archive(byte) = "lens.cma"
 archive(byte, plugin) = "lens.cma"
