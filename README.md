@@ -95,7 +95,7 @@ Or using the `Infix` module we can do the same thing, only shorter.
     ((editor_lens |-- car_lens |-- mileage_lens) ^= 10) @@ scifi_novel;;
 ```
 
-Ppx syntax extension support
+Ppx syntax extension
 --------------------
 
 Lenses can be generated using the 'lens.ppx_deriving' plugin for [ppx_deriving](https://github.com/whitequark/ppx_deriving)
@@ -112,4 +112,20 @@ type car = {
 val car_make: (car, string) Lens.t
 val car_model: (car, string) Lens.t
 val car_mileage: (car, int) Lens.t
+```
+
+The `prefix` option can be used to each lens name with `lens`.
+
+``` ocaml
+#require "lens.ppx_deriving";;
+
+type car = {
+  make : string;
+  model: string;
+  mileage: int;
+} [@@deriving lens { prefix = true }];;
+
+val lens_car_make: (car, string) Lens.t
+val lens_car_model: (car, string) Lens.t
+val lens_car_mileage: (car, int) Lens.t
 ```

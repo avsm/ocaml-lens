@@ -8,10 +8,25 @@ open Ast_convenience
 let deriver = "lens"
 let raise_errorf = Ppx_deriving.raise_errorf
 
+type lens_options = {
+  prefix: bool;
+}
+
+let lens_default_options = {
+  prefix = false;
+}
+
 let parse_options options =
-  options |> List.iter (fun (name, expr) ->
+  options |> List.fold_left (fun deriver_options (name, expr) ->
     match name with
-    | _ -> raise_errorf ~loc:expr.pexp_loc "%s does not support option %s" deriver name)
+    | "prefix" | "affix" -> begin
+      match expr with
+      | [%expr true] |  [%expr "true"]  -> { prefix = true; }
+      | [%expr false] | [%expr "false"] -> { prefix = false; }
+      | _ -> raise_errorf ~loc:expr.pexp_loc "%s %s option must be either true or false" deriver name
+    end
+    | _ -> raise_errorf ~loc:expr.pexp_loc "%s does not support option %s" deriver name
+  ) lens_default_options
 
 (* builds the expression: { record with field = value } *)
 let updated_record record field value =
@@ -22,8 +37,13 @@ let updated_record record field value =
     )
   )
 
+let lens_name ~deriver_options record_type_decl field_name =
+  if deriver_options.prefix
+  then Ppx_deriving.mangle_type_decl (`PrefixSuffix (deriver,field_name)) record_type_decl
+  else Ppx_deriving.mangle_type_decl (`Suffix field_name) record_type_decl
+
 let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
-  ignore (parse_options options);
+  let deriver_options = parse_options options in
   match type_decl.ptype_kind with
   | Ptype_record labels -> labels
     |> List.map (fun { pld_name = { txt = name; loc } } -> 
@@ -33,7 +53,7 @@ let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
       }]
     )
     |> List.map (fun (name,lens) ->
-      Vb.mk (pvar (Ppx_deriving.mangle_type_decl (`Suffix name) type_decl)) lens
+      Vb.mk (pvar (lens_name ~deriver_options type_decl name)) lens
     )
   | _ -> raise_errorf ~loc "%s can be derived only for record types" deriver
 
@@ -41,12 +61,12 @@ let type_named name =
   Typ.mk (Ptyp_constr (mknoloc (Lident name), []))
 
 let sig_of_type ~options ~path ({ ptype_loc = loc; ptype_name = { txt = record_name } } as type_decl) =
-  ignore (parse_options options);
+  let deriver_options = parse_options options in
   match type_decl.ptype_kind with
   | Ptype_record labels -> labels
     |> List.map (fun { pld_name = { txt = name; loc }; pld_type } -> 
       let lens_type = [%type: ([%t type_named record_name], [%t pld_type]) Lens.t] in
-      Sig.value (Val.mk (mknoloc (Ppx_deriving.mangle_type_decl (`Suffix name) type_decl)) lens_type)
+      Sig.value (Val.mk (mknoloc (lens_name ~deriver_options type_decl name)) lens_type)
     )
   | _ -> raise_errorf ~loc "%s can be derived only for record types" deriver
 
