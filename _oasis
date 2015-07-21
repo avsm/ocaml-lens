@@ -35,6 +35,9 @@ Library lens_ppx_deriving
     Path: ppx_deriving
     Modules: Ppx_deriving_lens
     BuildDepends: lens, ppx_deriving.api, ppx_tools.metaquot
+    XMETAType: syntax
+    XMETAExtraLines: requires(-ppx_driver) = "ppx_deriving"
+                     ppxopt(-ppx_driver) = "ppx_deriving,./lens_ppx_deriving.cma"
 
 Executable ppx_test
     Build$:        flag(ppx) && flag(tests)
