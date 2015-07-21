@@ -20,7 +20,7 @@ BuildTools:     ocamlbuild
 
 Flag ppx
     Description: Build ppx-deriving support for lens
-    Default: true
+    Default: false
 
 Library lens
     Path: .
@@ -28,6 +28,7 @@ Library lens
     Modules: Lens
 
 Library lens_ppx_deriving
+    XMETADescription: ppx-deriving support for lens
     Build$: flag(ppx)
     FindLibName: ppx_deriving
     FindLibParent: lens
