@@ -18,7 +18,32 @@ License:        BSD-3-clause
 Plugins:        META (0.4), DevFiles (0.4)
 BuildTools:     ocamlbuild
 
+Flag ppx
+    Description: Build ppx-deriving support for lens
+    Default: true
+
 Library lens
     Path: .
     Findlibname: lens
     Modules: Lens
+
+Library lens_ppx_deriving
+    Build$: flag(ppx)
+    FindLibName: ppx_deriving
+    FindLibParent: lens
+    Path: ppx_deriving
+    Modules: Ppx_deriving_lens
+    BuildDepends: lens, ppx_deriving, ppx_tools.metaquot
+
+Executable ppx_test
+    Build$:        flag(ppx) && flag(tests)
+    Install:       false
+    Path:          ppx_test
+    MainIs:        test_lens.ml
+    BuildDepends:  lens, lens.ppx_deriving, ppx_deriving, oUnit
+    ByteOpt:       -ppx 'ocamlfind ppx_deriving/ppx_deriving ppx_deriving/lens_ppx_deriving.cma'
+
+Test test_ppx
+    Run$: flag(ppx) && flag(tests)
+    TestTools: ppx_test
+    Command: $ppx_test
