@@ -1,3 +1,5 @@
 _build
 setup.log
 setup.data
+*.byte
+*.native
