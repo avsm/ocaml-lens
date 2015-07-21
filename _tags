@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: d1d86bf9b3c195b618bc1ee59e47825b)
+# DO NOT EDIT (digest: f811ca931abeb244e2696fa2fc2064a3)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -18,7 +18,7 @@ true: annot, bin_annot
 "lens.cmxs": use_lens
 # Library lens_ppx_deriving
 "ppx_deriving/lens_ppx_deriving.cmxs": use_lens_ppx_deriving
-<ppx_deriving/*.ml{,i,y}>: pkg_ppx_deriving
+<ppx_deriving/*.ml{,i,y}>: pkg_ppx_deriving.api
 <ppx_deriving/*.ml{,i,y}>: pkg_ppx_tools.metaquot
 <ppx_deriving/*.ml{,i,y}>: use_lens
 # Executable ppx_test
@@ -26,11 +26,13 @@ true: annot, bin_annot
 <ppx_test/*.ml{,i,y}>: oasis_executable_ppx_test_byte
 "ppx_test/test_lens.byte": pkg_oUnit
 "ppx_test/test_lens.byte": pkg_ppx_deriving
+"ppx_test/test_lens.byte": pkg_ppx_deriving.api
 "ppx_test/test_lens.byte": pkg_ppx_tools.metaquot
 "ppx_test/test_lens.byte": use_lens
 "ppx_test/test_lens.byte": use_lens_ppx_deriving
 <ppx_test/*.ml{,i,y}>: pkg_oUnit
 <ppx_test/*.ml{,i,y}>: pkg_ppx_deriving
+<ppx_test/*.ml{,i,y}>: pkg_ppx_deriving.api
 <ppx_test/*.ml{,i,y}>: pkg_ppx_tools.metaquot
 <ppx_test/*.ml{,i,y}>: use_lens
 <ppx_test/*.ml{,i,y}>: use_lens_ppx_deriving

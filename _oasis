@@ -34,7 +34,7 @@ Library lens_ppx_deriving
     FindLibParent: lens
     Path: ppx_deriving
     Modules: Ppx_deriving_lens
-    BuildDepends: lens, ppx_deriving, ppx_tools.metaquot
+    BuildDepends: lens, ppx_deriving.api, ppx_tools.metaquot
 
 Executable ppx_test
     Build$:        flag(ppx) && flag(tests)
