@@ -114,7 +114,7 @@ val car_model: (car, string) Lens.t
 val car_mileage: (car, int) Lens.t
 ```
 
-The `prefix` option can be used to each lens name with `lens`.
+The `prefix` option can be used to prefix each lens name with `lens`.
 
 ``` ocaml
 #require "lens.ppx_deriving";;
