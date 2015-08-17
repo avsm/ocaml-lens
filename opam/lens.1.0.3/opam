@@ -7,7 +7,7 @@ homepage: "https://github.com/pdonadeo/ocaml-lens"
 dev-repo: "https://github.com/pdonadeo/ocaml-lens.git"
 bug-reports: "https://github.com/pdonadeo/ocaml-lens/issues"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--enable-ppx" {ppx-deriving:installed & ppx_tools.metaquot:installed} ]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--enable-ppx" {ppx_deriving:installed & ppx_tools:installed} ]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
@@ -18,6 +18,6 @@ depends: [
   "ocamlfind" { build }
 ]
 depopts: [
-  "ppx-deriving"
-  "ppx_tools.metaquot" { build }
+  "ppx_deriving" { build }
+  "ppx_tools" { build }
 ]
