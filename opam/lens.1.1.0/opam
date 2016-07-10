@@ -16,6 +16,7 @@ remove: [
 ]
 depends: [
   "ocamlfind" { build }
+  "ounit" { build }
 ]
 depopts: [
   "ppx_deriving" { build }
