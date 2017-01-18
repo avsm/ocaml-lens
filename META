@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: 1988a0fb36443027f194482ea2c9f474)
-version = "1.0.2"
+# DO NOT EDIT (digest: 5e3fc0b21e4bb7d25250251911e222fd)
+version = "1.1.0"
 description = "Functional lenses"
 archive(byte) = "lens.cma"
 archive(byte, plugin) = "lens.cma"
@@ -8,7 +8,7 @@ archive(native) = "lens.cmxa"
 archive(native, plugin) = "lens.cmxs"
 exists_if = "lens.cma"
 package "ppx_deriving" (
- version = "1.0.2"
+ version = "1.1.0"
  description = "ppx-deriving support for lens"
  requires = "lens ppx_deriving.api ppx_tools.metaquot"
  archive(syntax, preprocessor) = "lens_ppx_deriving.cma"

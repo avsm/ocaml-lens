@@ -1,4 +1,4 @@
-opam-version: "1.3"
+opam-version: "1.2"
 available: [ ocaml-version >= "4.01.0" ]
 maintainer: "Paolo Donadeo <p.donadeo@gmail.com>"
 authors: [ "Alessandro Strada <alessandro.strada@gmail.com>" ]
@@ -7,7 +7,7 @@ homepage: "https://github.com/pdonadeo/ocaml-lens"
 dev-repo: "https://github.com/pdonadeo/ocaml-lens.git"
 bug-reports: "https://github.com/pdonadeo/ocaml-lens/issues"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--enable-ppx" {ppx-deriving:installed & ppx_tools.metaquot:installed} ]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--enable-ppx" {ppx_deriving:installed & ppx_tools:installed} ]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
@@ -16,8 +16,9 @@ remove: [
 ]
 depends: [
   "ocamlfind" { build }
+  "ounit" { build }
 ]
 depopts: [
-  "ppx-deriving"
-  "ppx_tools.metaquot" { build }
+  "ppx_deriving" { build }
+  "ppx_tools" { build }
 ]
