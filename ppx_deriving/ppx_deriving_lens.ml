@@ -41,6 +41,25 @@ let updated_record record field value =
     )
   )
 
+(* wraps a list of signatures into a module signature *)
+let declare_module loc module_name signatures =
+  {psig_desc = Psig_module
+    {pmd_name = {txt = module_name; loc};
+     pmd_type = {pmty_desc = Pmty_signature signatures; pmty_loc = loc; pmty_attributes = [] };
+     pmd_loc = loc;
+     pmd_attributes = []};
+  psig_loc = loc}
+
+(* wraps a list of expression into a module *)
+let define_module loc module_name expressions =
+  let expressions = List.map (fun x -> {pstr_desc = Pstr_value (Nonrecursive,[x]); pstr_loc = loc}) expressions in
+  Pstr_module {
+    pmb_name = {txt = module_name; loc};
+    pmb_expr = {pmod_desc = Pmod_structure expressions; pmod_loc = loc; pmod_attributes = []};
+    pmb_loc = loc;
+    pmb_attributes = [];
+  }
+
 let lens_name ~deriver_options record_type_decl field_name =
   if deriver_options.submodule
   then
@@ -49,6 +68,16 @@ let lens_name ~deriver_options record_type_decl field_name =
     if deriver_options.prefix
     then Ppx_deriving.mangle_type_decl (`PrefixSuffix (deriver,field_name)) record_type_decl
     else Ppx_deriving.mangle_type_decl (`Suffix field_name) record_type_decl
+
+let wrap_in_submodule_sig ~deriver_options loc signatures =
+  if deriver_options.submodule
+  then [declare_module loc "Lens" signatures]
+  else signatures
+
+let wrap_in_submodule_struct ~deriver_options loc expressions =
+  if deriver_options.submodule
+  then {pstr_desc = define_module loc "Lens" expressions; pstr_loc = loc}
+  else {pstr_desc = Pstr_value (Nonrecursive, expressions); pstr_loc = loc}
 
 let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
   let deriver_options = parse_options options in
@@ -63,6 +92,7 @@ let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
     |> List.map (fun (name,lens) ->
       Vb.mk (pvar (lens_name ~deriver_options type_decl name)) lens
     )
+    |> wrap_in_submodule_struct ~deriver_options loc
   | _ -> raise_errorf ~loc "%s can be derived only for record types" deriver
 
 let type_named name =
@@ -76,12 +106,13 @@ let sig_of_type ~options ~path ({ ptype_loc = loc; ptype_name = { txt = record_n
       let lens_type = [%type: ([%t type_named record_name], [%t pld_type]) Lens.t] in
       Sig.value (Val.mk (mknoloc (lens_name ~deriver_options type_decl name)) lens_type)
     )
+    |> wrap_in_submodule_sig ~deriver_options loc
   | _ -> raise_errorf ~loc "%s can be derived only for record types" deriver
 
 let () =
   Ppx_deriving.(register (create deriver
     ~type_decl_str: (fun ~options ~path type_decls ->
-       [Str.value Nonrecursive (List.concat (List.map (str_of_type ~options ~path) type_decls))])
+       List.map (str_of_type ~options ~path) type_decls)
     ~type_decl_sig: (fun ~options ~path type_decls ->
        List.concat (List.map (sig_of_type ~options ~path) type_decls))
     ()

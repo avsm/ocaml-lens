@@ -89,9 +89,9 @@ end
 let test_module ctxt = M_with_module.(
   let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
 
-  assert_equal (get model car) "2CV";
+  assert_equal (get Lens.model car) "2CV";
 
-  assert_equal (set model "deux chevaux" car)
+  assert_equal (set Lens.model "deux chevaux" car)
                { make = "Citroën"; model = "deux chevaux"; mileage = 1948 }
 )
 
