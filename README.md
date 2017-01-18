@@ -129,3 +129,39 @@ val lens_car_make: (car, string) Lens.t
 val lens_car_model: (car, string) Lens.t
 val lens_car_mileage: (car, int) Lens.t
 ```
+
+The `submodule` option groups all the lenses in a sub-module `Lens`.
+
+``` ocaml
+#require "lens.ppx_deriving";;
+
+type car = {
+  make : string;
+  model: string;
+  mileage: int;
+} [@@deriving lens { submodule = true }];;
+ 
+module Lens :
+  val make : (car, string) Lens.t
+  val model : (car, string) Lens.t
+  val mileage : (car, int) Lens.t
+end
+```
+
+When the `prefix` and `submodule` options are combined, this is the module name which is prefixed.
+
+``` ocaml
+#require "lens.ppx_deriving";;
+
+type car = {
+  make : string;
+  model: string;
+  mileage: int;
+} [@@deriving lens { submodule = true; prefix = true }];;
+ 
+module CarLens :
+  val make : (car, string) Lens.t
+  val model : (car, string) Lens.t
+  val mileage : (car, int) Lens.t
+end
+```
