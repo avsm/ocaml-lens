@@ -10,21 +10,25 @@ let raise_errorf = Ppx_deriving.raise_errorf
 
 type lens_options = {
   prefix: bool;
+  submodule: bool;
 }
 
 let lens_default_options = {
   prefix = false;
+  submodule = false;
 }
+
+let bool_option deriver name expr =
+  match expr with
+  | [%expr true] |  [%expr "true"]  -> true
+  | [%expr false] | [%expr "false"] -> false
+  | _ -> raise_errorf ~loc:expr.pexp_loc "%s %s option must be either true or false" deriver name
 
 let parse_options options =
   options |> List.fold_left (fun deriver_options (name, expr) ->
     match name with
-    | "prefix" | "affix" -> begin
-      match expr with
-      | [%expr true] |  [%expr "true"]  -> { prefix = true; }
-      | [%expr false] | [%expr "false"] -> { prefix = false; }
-      | _ -> raise_errorf ~loc:expr.pexp_loc "%s %s option must be either true or false" deriver name
-    end
+    | "prefix" | "affix" -> { deriver_options with prefix = bool_option deriver name expr }
+    | "submodule" ->        { deriver_options with submodule = bool_option deriver name expr }
     | _ -> raise_errorf ~loc:expr.pexp_loc "%s does not support option %s" deriver name
   ) lens_default_options
 
