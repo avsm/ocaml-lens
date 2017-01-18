@@ -26,6 +26,29 @@ let test_basic ctxt = M.(
                { make = "Citroën"; model = "deux chevaux"; mileage = 1948 }
 )
 
+module M_with_type_named_t : sig
+  type t = {
+    make : string;
+    model: string;
+    mileage: int;
+  } [@@deriving lens]
+end = struct
+  type t = {
+    make : string;
+    model: string;
+    mileage: int;
+  } [@@deriving lens]
+end
+
+let test_with_type_named_t ctxt = M_with_type_named_t.(
+  let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
+
+  assert_equal (get model car) "2CV";
+
+  assert_equal (set model "deux chevaux" car)
+               { make = "Citroën"; model = "deux chevaux"; mileage = 1948 }
+)
+
 module M_with_prefix : sig
   type car = {
     make : string;
@@ -50,6 +73,7 @@ let test_prefix ctxt = M_with_prefix.(
 )
 
 let suite = "Test deriving(lens)" >::: [
-    "test_basic"    >:: test_basic;
-    "test_prefix"    >:: test_prefix;
+    "test_basic"             >:: test_basic;
+    "test_with_type_named_t" >:: test_with_type_named_t;
+    "test_prefix"            >:: test_prefix;
   ]
