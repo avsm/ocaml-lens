@@ -42,9 +42,13 @@ let updated_record record field value =
   )
 
 let lens_name ~deriver_options record_type_decl field_name =
-  if deriver_options.prefix
-  then Ppx_deriving.mangle_type_decl (`PrefixSuffix (deriver,field_name)) record_type_decl
-  else Ppx_deriving.mangle_type_decl (`Suffix field_name) record_type_decl
+  if deriver_options.submodule
+  then
+    field_name
+  else
+    if deriver_options.prefix
+    then Ppx_deriving.mangle_type_decl (`PrefixSuffix (deriver,field_name)) record_type_decl
+    else Ppx_deriving.mangle_type_decl (`Suffix field_name) record_type_decl
 
 let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
   let deriver_options = parse_options options in
