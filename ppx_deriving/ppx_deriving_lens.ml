@@ -69,14 +69,23 @@ let lens_name ~deriver_options record_type_decl field_name =
     then Ppx_deriving.mangle_type_decl (`PrefixSuffix (deriver,field_name)) record_type_decl
     else Ppx_deriving.mangle_type_decl (`Suffix field_name) record_type_decl
 
-let wrap_in_submodule_sig ~deriver_options loc signatures =
+let module_name  ~deriver_options { ptype_name = { txt = name } } =
+  if deriver_options.prefix
+  then (String.capitalize_ascii name) ^ "Lens"
+  else "Lens"
+
+let wrap_in_submodule_sig ~deriver_options record loc signatures =
   if deriver_options.submodule
-  then [declare_module loc "Lens" signatures]
+  then
+    let module_name = module_name  ~deriver_options record in
+    [declare_module loc module_name signatures]
   else signatures
 
-let wrap_in_submodule_struct ~deriver_options loc expressions =
+let wrap_in_submodule_struct ~deriver_options record loc expressions =
   if deriver_options.submodule
-  then {pstr_desc = define_module loc "Lens" expressions; pstr_loc = loc}
+  then
+    let module_name = module_name  ~deriver_options record in
+    {pstr_desc = define_module loc module_name expressions; pstr_loc = loc}
   else {pstr_desc = Pstr_value (Nonrecursive, expressions); pstr_loc = loc}
 
 let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
@@ -92,7 +101,7 @@ let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
     |> List.map (fun (name,lens) ->
       Vb.mk (pvar (lens_name ~deriver_options type_decl name)) lens
     )
-    |> wrap_in_submodule_struct ~deriver_options loc
+    |> wrap_in_submodule_struct ~deriver_options type_decl loc
   | _ -> raise_errorf ~loc "%s can be derived only for record types" deriver
 
 let type_named name =
@@ -106,7 +115,7 @@ let sig_of_type ~options ~path ({ ptype_loc = loc; ptype_name = { txt = record_n
       let lens_type = [%type: ([%t type_named record_name], [%t pld_type]) Lens.t] in
       Sig.value (Val.mk (mknoloc (lens_name ~deriver_options type_decl name)) lens_type)
     )
-    |> wrap_in_submodule_sig ~deriver_options loc
+    |> wrap_in_submodule_sig ~deriver_options type_decl loc
   | _ -> raise_errorf ~loc "%s can be derived only for record types" deriver
 
 let () =
