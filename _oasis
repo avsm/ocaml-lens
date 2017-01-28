@@ -10,7 +10,7 @@ Description:
     see http://www.youtube.com/watch?v=efv0SQNde5Q - Functional lenses for Scala by Edward Kmett on YouTube
     see http://patternsinfp.wordpress.com/2011/01/31/lenses-are-the-coalgebras-for-the-costate-comonad - Lenses are the coalgebras for the costate comonad by Jeremy Gibbons
 Homepage:       https://github.com/avsm/ocaml-lens
-Version:        1.1.0
+Version:        1.2.0
 Synopsis:       Functional lenses
 Authors:        Alessandro Strada <alessandro.strada@gmail.com>
 Maintainers:    Paolo Donadeo <p.donadeo@gmail.com>
