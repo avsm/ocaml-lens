@@ -62,18 +62,18 @@ Now to construct a few lenses to access some things
 
 ``` ocaml
     let car_lens = {
-	    get = (fun x -> x.car);
-	    set = (fun v x -> { x with car = v })
-	  };;
+        get = (fun x -> x.car);
+        set = (fun v x -> { x with car = v })
+      };;
 
     let editor_lens = {
-	    get = (fun x -> x.editor);
-	    set = (fun v x -> { x with editor = v })
-	};;
+        get = (fun x -> x.editor);
+        set = (fun v x -> { x with editor = v })
+    };;
 
     let mileage_lens = {
-	    get = (fun x -> x.mileage);
-	    set = (fun v x -> { x with mileage = v })
+        get = (fun x -> x.mileage);
+        set = (fun v x -> { x with mileage = v })
 
     };;
 ```
@@ -140,7 +140,7 @@ type car = {
   model: string;
   mileage: int;
 } [@@deriving lens { submodule = true }];;
- 
+
 module Lens :
   val make : (car, string) Lens.t
   val model : (car, string) Lens.t
@@ -158,7 +158,7 @@ type car = {
   model: string;
   mileage: int;
 } [@@deriving lens { submodule = true; prefix = true }];;
- 
+
 module CarLens :
   val make : (car, string) Lens.t
   val model : (car, string) Lens.t

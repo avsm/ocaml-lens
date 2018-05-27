@@ -71,7 +71,7 @@ let lens_name ~deriver_options record_type_decl field_name =
 
 let module_name  ~deriver_options { ptype_name = { txt = name } } =
   if deriver_options.prefix
-  then (String.capitalize name) ^ "Lens"
+  then (String.capitalize_ascii name) ^ "Lens"
   else "Lens"
 
 let wrap_in_submodule_sig ~deriver_options record loc signatures =
@@ -92,7 +92,7 @@ let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
   let deriver_options = parse_options options in
   match type_decl.ptype_kind with
   | Ptype_record labels -> labels
-    |> List.map (fun { pld_name = { txt = name; loc } } -> 
+    |> List.map (fun { pld_name = { txt = name; loc } } ->
       name, [%expr Lens.{
         get = (fun r -> [%e Exp.field (evar "r") (mknoloc (Lident name))] );
         set = (fun v r -> [%e updated_record "r" name "v"]);
@@ -111,7 +111,7 @@ let sig_of_type ~options ~path ({ ptype_loc = loc; ptype_name = { txt = record_n
   let deriver_options = parse_options options in
   match type_decl.ptype_kind with
   | Ptype_record labels -> labels
-    |> List.map (fun { pld_name = { txt = name; loc }; pld_type } -> 
+    |> List.map (fun { pld_name = { txt = name; loc }; pld_type } ->
       let lens_type = [%type: ([%t type_named record_name], [%t pld_type]) Lens.t] in
       Sig.value (Val.mk (mknoloc (lens_name ~deriver_options type_decl name)) lens_type)
     )

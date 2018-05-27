@@ -1,5 +1,6 @@
-_build
-setup.log
-setup.data
 *.byte
+*.docdir
+*.install
 *.native
+_build
+pkg/META

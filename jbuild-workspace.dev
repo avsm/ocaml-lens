@@ -1,0 +1,6 @@
+;; This file is used by `make all-supported-ocaml-versions`
+(context ((switch 4.04.1-LENS)))
+(context ((switch 4.04.2-LENS)))
+(context ((switch 4.05.0-LENS)))
+(context ((switch 4.06.0-LENS)))
+(context ((switch 4.06.1-LENS)))
