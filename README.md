@@ -2,7 +2,7 @@ Functional Lenses
 =================
 
 This package provides some basic types and functions for using lenses in OCaml.
-Functional lenses are based on F# implementation in [FSharpX](https://github.com/fsharp/fsharpx). See [src/FSharpx.Core/Lens.fs](https://github.com/fsharp/fsharpx/blob/master/src/FSharpx.Core/Lens.fs) for the original implementation.  Written by Alessandro Strada.
+Functional lenses are based on F# implementation in [FSharpX](https://github.com/fsharp/fsharpx). See [src/FSharpx.Extras/Lens.fs](https://github.com/fsharp/fsharpx/blob/master/src/FSharpx.Extras/Lens.fs) for the original implementation.  Written by Alessandro Strada.
 
 See also:
 * <http://bugsquash.blogspot.com/2011/11/lenses-in-f.html> Lenses in F#
