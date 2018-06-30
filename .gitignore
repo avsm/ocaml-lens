@@ -1,5 +1,8 @@
-_build
-setup.log
-setup.data
 *.byte
+*.docdir
+*.install
 *.native
+.merlin
+Session.vim
+_build
+pkg/META
