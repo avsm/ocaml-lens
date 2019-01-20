@@ -2,7 +2,7 @@
 
 (executable
  ((name test_lens)
-  (modules (test_lens test_deriving_lens))
+  (modules (test_lens test_deriving_lens test_regression))
   (libraries (lens oUnit))
   (preprocess (pps (lens.ppx_deriving)))))
 

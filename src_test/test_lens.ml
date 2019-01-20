@@ -1,6 +1,7 @@
 open OUnit2
 
 let suite = "Test lens" >::: [
+    Test_regression.suite;
     Test_deriving_lens.suite;
   ]
 

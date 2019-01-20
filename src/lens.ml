@@ -170,7 +170,7 @@ struct
 
   let (+=) l v = _modify ((+) v) l
 
-  let (-=) l v = _modify ((-) v) l
+  let (-=) l v = _modify ((+) (-v)) l
 
 end
 
@@ -180,7 +180,7 @@ struct
 
   let (+=!) l v = modify_state l ((+) v)
 
-  let (-=!) l v = modify_state l ((-) v)
+  let (-=!) l v = modify_state l ((+) (-v))
 
   let (@=!) l v = modify_state l (fun a -> a @ v)
 
