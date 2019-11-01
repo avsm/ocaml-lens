@@ -1,16 +1,16 @@
 build:
-	jbuilder build
+	dune build
 
 test:
-	jbuilder runtest
+	dune runtest
 
 doc:
-	jbuilder build @doc
+	dune build @doc
 
 clean:
-	jbuilder clean
+	dune clean
 
 all-supported-ocaml-versions:
-	jbuilder build @install @runtest --workspace jbuild-workspace.dev
+	dune build --workspace dune-workspace.dev @install @runtest
 
 .PHONY: build test doc clean all-supported-ocaml-versions

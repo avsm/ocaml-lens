@@ -17,7 +17,7 @@ end = struct
   } [@@deriving lens]
 end
 
-let test_basic ctxt = M.(
+let test_basic _ctxt = M.(
   let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
 
   assert_equal (get car_model car) "2CV";
@@ -40,7 +40,7 @@ end = struct
   } [@@deriving lens]
 end
 
-let test_with_type_named_t ctxt = M_with_type_named_t.(
+let test_with_type_named_t _ctxt = M_with_type_named_t.(
   let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
 
   assert_equal (get model car) "2CV";
@@ -63,7 +63,7 @@ end = struct
   } [@@deriving lens { prefix = true }]
 end
 
-let test_prefix ctxt = M_with_prefix.(
+let test_prefix _ctxt = M_with_prefix.(
   let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
 
   assert_equal (get lens_car_model car) "2CV";
@@ -86,7 +86,7 @@ end = struct
   } [@@deriving lens { submodule = true }]
 end
 
-let test_module ctxt = M_with_module.(
+let test_module _ctxt = M_with_module.(
   let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
 
   assert_equal (get Lens.model car) "2CV";
@@ -109,7 +109,7 @@ end = struct
   } [@@deriving lens { submodule = true; prefix = true }]
 end
 
-let test_module_and_prefix ctxt = M_with_module_and_prefix.(
+let test_module_and_prefix _ctxt = M_with_module_and_prefix.(
   let car = { make = "Citroën"; model = "2CV"; mileage = 1948 } in
 
   assert_equal (get CarLens.model car) "2CV";
@@ -128,7 +128,7 @@ end = struct
   end
 end
 
-let test_within_a_module ctxt = M_within_a_module.(
+let test_within_a_module _ctxt = M_within_a_module.(
   let car = Car.({ make = "Citroën"; model = "2CV"; mileage = 1948 }) in
 
   assert_equal (get Car.Lens.model car) "2CV";

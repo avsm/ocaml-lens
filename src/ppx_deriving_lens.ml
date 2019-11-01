@@ -69,7 +69,7 @@ let lens_name ~deriver_options record_type_decl field_name =
     then Ppx_deriving.mangle_type_decl (`PrefixSuffix (deriver,field_name)) record_type_decl
     else Ppx_deriving.mangle_type_decl (`Suffix field_name) record_type_decl
 
-let module_name  ~deriver_options { ptype_name = { txt = name } } =
+let [@warning "-9"] module_name ~deriver_options { ptype_name = { txt = name } } =
   if deriver_options.prefix
   then (String.capitalize_ascii name) ^ "Lens"
   else "Lens"
@@ -88,11 +88,11 @@ let wrap_in_submodule_struct ~deriver_options record loc expressions =
     {pstr_desc = define_module loc module_name expressions; pstr_loc = loc}
   else {pstr_desc = Pstr_value (Nonrecursive, expressions); pstr_loc = loc}
 
-let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
+let [@warning "-9-27"] str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
   let deriver_options = parse_options options in
   match type_decl.ptype_kind with
   | Ptype_record labels -> labels
-    |> List.map (fun { pld_name = { txt = name; loc } } ->
+    |> List.map (fun { pld_name = { txt = name; _ } } ->
       name, [%expr Lens.{
         get = (fun r -> [%e Exp.field (evar "r") (mknoloc (Lident name))] );
         set = (fun [@warning "-23"] v r -> [%e updated_record "r" name "v"]);
@@ -107,11 +107,11 @@ let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
 let type_named name =
   Typ.mk (Ptyp_constr (mknoloc (Lident name), []))
 
-let sig_of_type ~options ~path ({ ptype_loc = loc; ptype_name = { txt = record_name } } as type_decl) =
+let [@warning "-9-27"] sig_of_type ~options ~path ({ ptype_loc = loc; ptype_name = { txt = record_name } } as type_decl) =
   let deriver_options = parse_options options in
   match type_decl.ptype_kind with
   | Ptype_record labels -> labels
-    |> List.map (fun { pld_name = { txt = name; loc }; pld_type } ->
+    |> List.map (fun { pld_name = { txt = name; _ }; pld_type } ->
       let lens_type = [%type: ([%t type_named record_name], [%t pld_type]) Lens.t] in
       Sig.value (Val.mk (mknoloc (lens_name ~deriver_options type_decl name)) lens_type)
     )

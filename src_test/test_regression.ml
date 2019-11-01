@@ -2,7 +2,7 @@ open OUnit2
 
 
 (* https://github.com/pdonadeo/ocaml-lens/issues/11 *)
-let issue_11 ctxt =
+let issue_11 _ctxt =
   let open Lens.Infix in
   let xs = [1; 2; 3; 4; 5] in
   let l = Lens.for_list 4 in
@@ -11,7 +11,7 @@ let issue_11 ctxt =
 
 (* https://github.com/pdonadeo/ocaml-lens/issues/13 *)
 [@@@warnerror "+23"]
-let issue_13 _ =
+let [@warning "-32"] issue_13 _ctxt =
   let module X = struct
     type b = {
       row : unit
