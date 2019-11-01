@@ -5,3 +5,4 @@
 (context ((switch 4.06.1-LENS)))
 (context ((switch 4.07.0-LENS)))
 (context ((switch 4.07.1-LENS)))
+(context ((switch 4.08.1-LENS)))

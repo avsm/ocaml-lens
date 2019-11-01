@@ -95,7 +95,7 @@ let str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
     |> List.map (fun { pld_name = { txt = name; loc } } ->
       name, [%expr Lens.{
         get = (fun r -> [%e Exp.field (evar "r") (mknoloc (Lident name))] );
-        set = (fun v r -> [%e updated_record "r" name "v"]);
+        set = (fun [@warning "-23"] v r -> [%e updated_record "r" name "v"]);
       }]
     )
     |> List.map (fun (name,lens) ->
