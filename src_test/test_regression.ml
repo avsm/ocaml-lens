@@ -9,6 +9,18 @@ let issue_11 ctxt =
   let xs = (l -= 1) xs in
   assert_equal [1; 2; 3; 4; 4] xs
 
+(* https://github.com/pdonadeo/ocaml-lens/issues/13 *)
+[@@@warnerror "+23"]
+let issue_13 _ =
+  let module X = struct
+    type b = {
+      row : unit
+    } [@@deriving lens { submodule = true; prefix = true }]
+  end in
+  ()
+[@@@warnerror "-23"]
+
 let suite = "Regression test" >::: [
   "issue_11"  >:: issue_11;
+  "issue_13"  >:: issue_13;
 ]
