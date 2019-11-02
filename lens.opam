@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "lens"
-version: "1.2.x"
+version: "1.2.3"
 maintainer: "Paolo Donadeo <p.donadeo@gmail.com>"
 authors: [ "Alessandro Strada <alessandro.strada@gmail.com>" ]
 license: "BSD-3-Clause"
@@ -29,6 +29,6 @@ see http://stackoverflow.com/questions/5767129/lenses-fclabels-data-accessor-whi
 see http://www.youtube.com/watch?v=efv0SQNde5Q - Functional lenses for Scala by Edward Kmett on YouTube
 see http://patternsinfp.wordpress.com/2011/01/31/lenses-are-the-coalgebras-for-the-costate-comonad - Lenses are the coalgebras for the costate comonad by Jeremy Gibbons"""
 url {
-  src: "https://github.com/pdonadeo/ocaml-lens/archive/v1.2.x.tar.gz"
+  src: "https://github.com/pdonadeo/ocaml-lens/archive/v1.2.3.tar.gz"
   checksum: "md5=00000000000000000000000000000000"
 }

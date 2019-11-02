@@ -1,3 +1,8 @@
+1.2.3 (02-Nov-2019):
+* Warning 23 suppressed in case of single label record. Closes #13
+* Switch from jbuilder to dune
+* Added setup for Travis CI
+
 1.2.2 (20-Jan-2019):
 * Solved issue with the pseudo imperative -= infix operator
   Thanks to @takanuva for reporting this.
