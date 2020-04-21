@@ -71,8 +71,8 @@ let lens_name ~deriver_options record_type_decl field_name =
 
 let [@warning "-9"] module_name ~deriver_options { ptype_name = { txt = name } } =
   if deriver_options.prefix
-  then (String.capitalize_ascii name) ^ "Lens"
-  else "Lens"
+  then Some ((String.capitalize_ascii name) ^ "Lens")
+  else Some "Lens"
 
 let wrap_in_submodule_sig ~deriver_options record loc signatures =
   if deriver_options.submodule
