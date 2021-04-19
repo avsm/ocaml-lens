@@ -1,9 +1,8 @@
-open Longident
-open Location
-open Asttypes
-open Parsetree
-open Ast_helper
-open Ast_convenience
+open Ppxlib.Longident
+open Ppxlib.Asttypes
+open Ppxlib.Parsetree
+open Ppxlib.Ast_helper
+open Ppx_deriving.Ast_convenience
 
 let deriver = "lens"
 let raise_errorf = Ppx_deriving.raise_errorf
