@@ -6,3 +6,4 @@
 Session.vim
 _build
 pkg/META
+*.code-workspace

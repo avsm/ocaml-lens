@@ -4,6 +4,7 @@ install: test -e .travis.opam.sh || wget https://raw.githubusercontent.com/ocaml
 script: bash -ex .travis-opam.sh
 env:
   - OCAML_VERSION=4.10
+  - OCAML_VERSION=4.11
 os:
   - linux
   - osx
