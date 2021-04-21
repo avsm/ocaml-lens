@@ -12,8 +12,7 @@ build: [
 depends: [
   "ocaml"           {>= "4.10"}
   "ppx_deriving"
-  "ppx_tools"       {build}
-  "ppxfind"         {build}
+  "ppxlib"          {build}
   "dune"            {>= "1.0"}
   "ounit"           {with-test}
 ]
