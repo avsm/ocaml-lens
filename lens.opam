@@ -26,6 +26,6 @@ see http://stackoverflow.com/questions/5767129/lenses-fclabels-data-accessor-whi
 see http://www.youtube.com/watch?v=efv0SQNde5Q - Functional lenses for Scala by Edward Kmett on YouTube
 see http://patternsinfp.wordpress.com/2011/01/31/lenses-are-the-coalgebras-for-the-costate-comonad - Lenses are the coalgebras for the costate comonad by Jeremy Gibbons"""
 url {
-  src: "https://github.com/pdonadeo/ocaml-lens/archive/v1.2.4.tar.gz"
-  checksum: "md5=563750d717d0ec581e91f2c537ca0b26"
+  src: "https://github.com/pdonadeo/ocaml-lens/archive/v1.2.5.tar.gz"
+  checksum: "md5=92e4f12cc563927b03953d293a2676be"
 }
