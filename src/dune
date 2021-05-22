@@ -1,0 +1,16 @@
+(library
+ (name lens)
+ (public_name lens)
+ (synopsis "Functional lenses")
+ (modules lens))
+
+(library
+ (name lens_ppx_deriving)
+ (public_name lens.ppx_deriving)
+ (synopsis "[@@deriving lens]")
+ (libraries ppx_deriving.api)
+ (preprocess
+  (pps ppxlib.metaquot))
+ (ppx_runtime_libraries lens)
+ (modules ppx_deriving_lens)
+ (kind ppx_deriver))
